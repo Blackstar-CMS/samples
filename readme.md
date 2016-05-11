@@ -1,7 +1,11 @@
 Blackstar CMS Client Samples
 ===============
 
-This repository contains a number of samples demonstrating the use of various Blackstar CMS clients. 
+This repository contains a number of samples demonstrating the use of various [Blackstar CMS](http://blackstarcms.net/) clients. 
+
+* [angular2-seed](#angular2-seed)
+* [HTML via HTTP](#html-via-http)
+* [HTML via the Blackstar CMS JavaScript Client](#html-via-the-blackstar-cms-javascript-client)
 
 angular2-seed
 -------------
@@ -54,5 +58,12 @@ It has been modified to populate the Home page with content sourced from Blackst
     }
     ```
 
+HTML via HTTP
+------------
 
- 
+Blackstar CMS content is accessed via HTTP, so you don't need to use one of the clients. The sample [http-example.html](https://github.com/Blackstar-CMS/samples/blob/master/html/http-example.html) accesses Blackstar CMS using the browsers [fetch API](https://developer.mozilla.org/en/docs/Web/API/Fetch_API). JQuery's AJAX methods would also work well. 
+
+HTML via the [Blackstar CMS JavaScript Client](https://www.npmjs.com/package/blackstar-cms-client)
+-------------------------
+
+[javascript-api-example.html](https://github.com/Blackstar-CMS/samples/blob/master/html/javascript-api-example.html) sample uses the Blackstar CMS JavaScript client to fetch content and bind it to the user interface.  
