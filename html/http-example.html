@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title id="index-title"></title>
+  </head>
+  <body>
+    <h1></h1>
+    <p id="content"></p>
+    <div id="footer"/>
+    <script src="jquery.min.js"></script>
+    <script>
+        function valueByName(name,collection) {
+            return collection.find(item => item.name === name).value;
+        };
+        
+        $(function() {
+            fetch('http://demo.blackstarcms.net/api/content/bytags/index-page')
+                .then(response => response.json().then(data => {
+                    $('#index-title').html(valueByName('index-title',data));
+                    $('h1').html(valueByName('index-heading',data));
+                    $('#content').html(valueByName('index-content',data));
+                    $('#footer').html(valueByName('index-footer',data));
+                }))
+                .catch(console.dir);
+        });
+    </script>
+  </body>
+</html>
