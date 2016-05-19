@@ -67,3 +67,33 @@ HTML via the [Blackstar CMS JavaScript Client](https://www.npmjs.com/package/bla
 -------------------------
 
 [javascript-api-example.html](https://github.com/Blackstar-CMS/samples/blob/master/html/javascript-api-example.html) sample uses the Blackstar CMS JavaScript client to fetch content and bind it to the user interface.  
+
+.NET (ASP.NET MVC)
+------------------
+
+Blackstar CMS content can be utilized by a server-side MVC framework like Asp.NET (or Ruby on Rails or Django or Express etc). 
+
+### Steps used to integrate Asp.NET MVC and Blackstar CMS
+
+1. Install the [Blackstar CMS .NET client](https://www.nuget.org/packages/Blackstar/1.0.0) from nuget
+
+    `> Install-Package Blackstar`
+
+1.  Within the MVC controller request the required content (e.g. all content with the 'blackstarpedia' tag).
+
+    ```C#
+    public async Task<ActionResult> Index()
+    {
+        var client = new BlackstarClient("http://demo.blackstarcms.net");
+        var content = await client.GetByTagAsync("blackstarpedia");
+        return View(HomeModel.FromContentChunks(content));
+    }
+    ```
+
+1. Within the view place the content in the correct locations.
+
+    ```
+    <h2>@Html.Raw(Model.smallerHeading)</h2>
+    ```
+
+    Note the use of `Html.Raw` to prevent the content from being escaped. 

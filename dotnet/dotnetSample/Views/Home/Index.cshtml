@@ -1,0 +1,94 @@
+﻿-@model dotnetSample.Controllers.HomeModel
+
+<body class="mediawiki ltr sitedir-ltr ns--1 ns-special mw-special-Book page-Special_Book skin-vector action-view">
+    <div id="mw-page-base" class="noprint"></div>
+    <div id="mw-head-base" class="noprint"></div>
+    <div id="content" class="mw-body" role="main">
+        <a id="top"></a>
+
+        <div id="siteNotice">
+        </div>
+        <div class="mw-indicators">
+        </div>
+        <h1 id="firstHeading" class="firstHeading" lang="en">@Html.Raw(Model.mainHeading)</h1>
+        <div id="bodyContent" class="mw-body-content">
+            <div id="contentSub"></div>
+            <div id="jump-to-nav" class="mw-jump">
+                Jump to: <a href="#mw-head">navigation</a>, <a href="#p-search">search</a>
+            </div>
+            <div id="mw-content-text">@Html.Raw(Model.mainContent)</div>
+
+            <h2>@Html.Raw(Model.smallerHeading)</h2>
+            <div>@Html.Raw(Model.secondContent)</div>
+        </div>
+
+    </div>
+    <div id="mw-navigation">
+        <h2>Navigation menu</h2>
+
+        <div id="mw-head">
+
+            <div id="left-navigation">
+                <div id="p-namespaces" role="navigation" class="vectorTabs" aria-labelledby="p-namespaces-label">
+                    <h3 id="p-namespaces-label">Namespaces</h3>
+                    <ul>
+                        <li id="ca-nstab-special" class="selected"><span><a href="/w/index.php?title=Special:Book&amp;bookcmd=book_creator&amp;referer=Main+Page" title="This is a special page which you cannot edit">Demo page</a></span></li>
+                    </ul>
+                </div>
+                <div id="p-variants" role="navigation" class="vectorMenu emptyPortlet" aria-labelledby="p-variants-label">
+                    <h3 tabindex="0" id="p-variants-label">
+                        <span>Variants</span><a tabindex="-1" href="#"></a>
+                    </h3>
+
+                    <div class="menu">
+                        <ul></ul>
+                    </div>
+                </div>
+            </div>
+            <div id="right-navigation">
+                <div id="p-views" role="navigation" class="vectorTabs emptyPortlet" aria-labelledby="p-views-label">
+                    <h3 id="p-views-label">Views</h3>
+                    <ul></ul>
+                </div>
+                <div style="" id="p-cactions" role="navigation" class="vectorMenu emptyPortlet" aria-labelledby="p-cactions-label">
+                    <h3 tabindex="0" id="p-cactions-label"><span>More</span><a tabindex="-1" href="#"></a></h3>
+
+                    <div class="menu">
+                        <ul></ul>
+                    </div>
+                </div>
+                <div id="p-search" role="search">
+                    <h3>
+                        <label for="searchInput">Search</label>
+                    </h3>
+
+                    <form action="#" id="searchform">
+                        <div id="simpleSearch">
+                            <input autocomplete="off" tabindex="1" name="search" placeholder="Search"
+                                   id="searchInput" type="search"><input value="Special:Search" name="title" type="hidden">
+                            <input name="go" value="Go" title="Go to a page with this exact name if it exists" id="searchButton" class="searchButton"
+                                   type="submit">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="mw-panel">
+            <div id="p-logo" role="banner" data-blackstar-name="logo">
+                <a class="" href="/wiki/Main_Page" title="Visit the main page"><img src="/Content/BlackstarPedia-logo.gif" style="width:165px" /></a>
+            </div>
+            <div class="portal" role="navigation" id="p-navigation" aria-labelledby="p-navigation-label">
+                <h3 id="p-navigation-label">Navigation</h3>
+                <div class="body">@Html.Raw(Model.nav)</div>
+            </div>
+            <div class="portal" role="navigation" id="p-lang" aria-labelledby="p-lang-label">
+                <span aria-haspopup="true" role="button" tabindex="0" title="Language settings" class="uls-settings-trigger"></span>
+            </div>
+        </div>
+    </div>
+    <div id="footer" role="contentinfo">@Html.Raw(Model.footer)</div>
+    <script src="/Content/prism.js"></script>
+    <script>
+        Prism.highlightAll(false);  // trigger syntax highlighting
+    </script>
+</body>
