@@ -6,6 +6,7 @@ This repository contains a number of samples demonstrating the use of various [B
 * [angular2-seed](#angular2-seed)
 * [HTML via HTTP](#html-via-http)
 * [HTML via the Blackstar CMS JavaScript Client](#html-via-the-blackstar-cms-javascript-client)
+* [.NET (ASP.NET MVC)](#net-aspnet-mvc)
 
 angular2-seed
 -------------
@@ -79,7 +80,7 @@ Blackstar CMS content can be utilized by a server-side MVC framework like Asp.NE
 
     `> Install-Package Blackstar`
 
-1.  Within the MVC controller request the required content (e.g. all content with the 'blackstarpedia' tag).
+1.  Within [the MVC controller](https://github.com/Blackstar-CMS/samples/blob/master/dotnet/dotnetSample/Controllers/HomeController.cs) request the required content (e.g. all content with the 'blackstarpedia' tag).
 
     ```C#
     public async Task<ActionResult> Index()
@@ -90,7 +91,7 @@ Blackstar CMS content can be utilized by a server-side MVC framework like Asp.NE
     }
     ```
 
-1. Within the view place the content in the correct locations.
+1. Within [the view](https://github.com/Blackstar-CMS/samples/blob/master/dotnet/dotnetSample/Views/Home/Index.cshtml) place the content in the correct locations.
 
     ```
     <h2>@Html.Raw(Model.smallerHeading)</h2>
