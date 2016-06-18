@@ -39,7 +39,7 @@ namespace dotnetSample.Controllers
 
         private static string ValueWithName(ContentChunk[] chunks, string name)
         {
-            return chunks.Single(chunk => chunk.Name == name).Value;
+            return chunks.Single(chunk => chunk.Name == name).Html;
         }
     }
 }

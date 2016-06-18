@@ -1,7 +1,6 @@
-/// <reference path="blackstar-cms-client.d.ts" />
-
 import {Component} from '@angular/core';
-import * as Blackstar from 'blackstar-cms-client';
+//import * as Blackstar from 'blackstar-cms-client';
+const Blackstar = require('blackstar-cms-client');
 
 @Component({
   selector: 'home',

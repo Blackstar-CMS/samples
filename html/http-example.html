@@ -11,7 +11,7 @@
     <script src="jquery.min.js"></script>
     <script>
         function valueByName(name,collection) {
-            return collection.find(item => item.name === name).value;
+            return collection.find(item => item.name === name).html;
         };
         
         $(function() {

@@ -9,6 +9,7 @@ require('whatwg-fetch');
  * @module Blackstar
  */
 
+
 /**
 * A Blackstar CMS client.
 * @constructor
@@ -48,7 +49,7 @@ Client.prototype.getAll = function () {
 Client.prototype.get = function (request) {
     var url = this.requestToUrl(request);
     return fetch(url)
-        .then(toJSON)
+        .then(function (response) { return response.json(); })
         .then(this.enrichCollectionWithByMethods);
 };
 /*
@@ -56,8 +57,7 @@ Client.prototype.get = function (request) {
  * @returns {Array} An array of tags (strings).
  */
 Client.prototype.getAllTags = function () {
-    return fetch(this.serverUrl + 'api/tags')
-        .then(toJSON);
+    return fetch(this.serverUrl + 'api/tags').then(function (response) { return response.json(); });
 };
 /*
  * Update an existing chunk.
@@ -68,6 +68,58 @@ Client.prototype.update = function (chunk) {
 Client.prototype.create = function (chunk) {
     return post(this.apiUrl.replace(/\/$/g, ''), chunk);
 };
+Client.prototype.delete = function (id) {
+    return fetch(this.apiUrl + id, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+};
+function post(url, data) {
+    return fetch(url, {
+        method: 'POST',
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+}
+
+Client.prototype.adminSearch = function (query) {
+    return fetch(this.serverUrl + 'api/adminSearch/' + query)
+        .then(function (response) { return response.json(); })
+        .then(this.enrichCollectionWithByMethods);
+};
+
+Client.prototype.mediaSearch = function (query) {
+    return fetch(this.serverUrl + 'api/mediaSearch/' + query)
+        .then(function (response) { return response.json(); });
+};
+
+Client.prototype.createMedia = function (files) {
+  var data = new FormData();
+  for (var i = 0; i<files.length; i++) {
+    let file = files[i];
+    data.append(i.toString() + 'file', file);
+    data.append(i.toString() + 'filename', file.name);
+    data.append(i.toString() + 'type', file.type);
+  }
+  return fetch(this.serverUrl + 'api/media', {
+    method: 'POST',
+    body: data
+  });
+};
+
+Client.prototype.deleteMedia = function (hash) {
+    return fetch(this.serverUrl + 'api/media/' + hash, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+};
+
 Client.prototype.enrichCollectionWithByMethods = function(data) { 
     data.byName = function (name) { return data.find(function (item) { return item.name === name; }); };
     data.byId = function (id) { return data.find(function (item) { return item.id === id; }); };
@@ -116,7 +168,7 @@ Client.prototype.bind = function (chunks, selector) {
         var el = !!selector ? selector(chunk) : document.querySelector('[data-blackstar-name="' + chunk.name + '"]');
         if (el) {
             el.setAttribute('data-blackstar-id', chunk.id);
-            el.innerHTML = chunk.value;
+            el.innerHTML = chunk.html;
         }
     });
     this.addEditLinks();
@@ -172,17 +224,8 @@ Client.prototype.addToolbox = function () {
     container.innerHTML = '<h3 style="color:#ffffff;margin:6px;padding:0;font-size:16px;">Blackstar CMS</h3>'
     container.innerHTML += '<a style="color:rgb(148, 155, 162)" target="_admin" href="' + this.serverUrl + 'search' + '" class="btn btn-default" href="#" role="button" style="margin:6px;"><span title="Search for content" class="pe-7s-search"></span></a>';
     container.innerHTML += '<a style="color:rgb(148, 155, 162)" title="Create a new chunk" target="_admin" href="' + this.serverUrl + 'newChunk' + '" class="btn btn-default" href="#" role="button" style="margin:6px;"><span title="Create a new chunk" class="pe-7s-plus"></span></a>';
-    container.innerHTML += '<span id="blackstar-link-toggle" class="pe-7s-look" title="Toggle edit links" style="margin:6px;"></span>';
+    container.innerHTML += '<span class="pe-7s-look" title="Toggle edit links" style="margin:6px;"></span>';
     document.body.appendChild(container);
-    
-    var toggle = document.getElementById('blackstar-link-toggle');
-    toggle.onclick = function () {
-        var editLinks = document.querySelectorAll('.blackstar-edit-link');
-        for (var i = 0; i < editLinks.length; i++) {
-            var editLink = editLinks[i];
-            editLink.style.display = editLink.style.display == 'none' ? 'inline' : 'none';
-        }         
-    };
     
     var buttons = document.querySelectorAll('#blackstar-toolbox span');
     for (var i = 0; i < buttons.length; ++i) {
@@ -198,20 +241,6 @@ Client.prototype.addToolbox = function () {
 
 function endsWithForwardSlash(input) {
     return /.+\/$/.test(input);
-}
-
-function post(url, data) {
-    var headers = new Headers();
-    headers.append("Content-Type", "application/json");
-    return fetch(url, {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: headers
-    });
-}
-
-function toJSON(response) { 
-    return response.json();
 }
 
 var toExport = {
@@ -1196,6 +1225,9 @@ var currentQueue;
 var queueIndex = -1;
 
 function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
     draining = false;
     if (currentQueue.length) {
         queue = currentQueue.concat(queue);

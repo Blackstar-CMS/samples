@@ -44,8 +44,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Blackstar, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Blackstar.1.0.0\lib\net40\Blackstar.dll</HintPath>
+    <Reference Include="Blackstar, Version=1.1.6013.22190, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Blackstar.1.1.6013.22190\lib\net40\Blackstar.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.AI.Agent.Intercept, Version=1.2.0.1011, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
